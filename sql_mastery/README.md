@@ -21,6 +21,8 @@
 - `SHOW GRANTS FOR user`
 ### Revoking Privileges
 - `REVOKE` command
+
+
 ## Indexing for High Performance
 - Indexes are data structures that can speed up queries
 ### Cost of Indexes
@@ -67,6 +69,7 @@
 - avoid redundant indexes
 - Always check existing indexes before creating new ones!
 
+
 ## Designing Databases
 How to design well-structured databases?
 ### Data Modeling
@@ -99,7 +102,27 @@ Process of reviewing design and making sure it follows some rules to avoid data 
 - A column in a table should not be derived from other columns
 ### Don't model the universe
 - don't overgeneralize. Solve today's problems, not tomorrow's
+
+
 ## Summarizing Data
 - Aggregate functions:`MAX()`, `MIN()`, `AVG()`, `SUM()`, `COUNT()`
 - Functions will filter first from `WHERE` clause and then perform aggregation
 - `GROUP BY` is always after `SELECT, FROM, WHERE` clauses, but before `ORDER BY` clause
+- Use `HAVING` clause to filter data after grouping (columns for conditions must be included in `SELECT` clause), use `WHERE` to filter before grouping
+- Rule of thumb, when you have an aggregate function, you should group by all cols in `SELECT` clause
+- `ROLLUP` operator captures summary values for each group and also entire result set
+
+## Writing Complex Queries
+- Subqueries can be in many places (inside `WHERE, FROM, SELECT` clauses)
+- reserve subqueries in `FROM` clause for simple queries, can use VIEWS instead
+- the `IN` operator returns a list of values
+### Subqueries vs Joins
+- can use both, choose the one that's more readable for the problem being solved
+- `ALL` operator looks at each row and finds max, similar to `MAX` function
+- `= ANY(..)` is equivalent to the `IN` operator
+### Correlated Subqueries
+- When the inner subquery references a table in the outer query
+- `EXISTS` vs `IN`: `IN` returns a list, `EXISTS` subquery doesn't return a result to the outer query, it returns an indication of whether any rows in subquery matches condition
+- more efficient to use `EXISTS` if you get back a large list using `IN`
+  
+## Essential MySQL functions
