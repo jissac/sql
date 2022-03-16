@@ -126,3 +126,52 @@ Process of reviewing design and making sure it follows some rules to avoid data 
 - more efficient to use `EXISTS` if you get back a large list using `IN`
   
 ## Essential MySQL functions
+- Numeric functions: `ROUND, TRUNCATE, CEILING, FLOOR, ABS, RAND`
+- String functions: `LENGTH, UPPER, LOWER`
+- removing space: `LTRIM, RTRIM, TRIM`
+- `LEFT('kindergarten', 4)` , `RIGHT('kindergarten', 6)`
+- `SUBSTRING('kindergarten', 3, 5)`
+- `LOCATE('n','kindergarten')` returns position of first occurance of character
+- `REPLACE('Kindergarten','garten', 'garden')`
+- `CONCAT('first','last')`
+- `NOW` current date and time
+- `CURDATE` date, without time
+- `CURETIME` time
+- `YEAR` returns the year `YEAR(NOW())`, also `MONTH, HOUR, MINUTE, SECOND`
+- `DAYNAME` and `MONTHNAME`
+- `EXTRACT`-pull out specific value, common to sql language across dbms: `EXTRACT(YEAR FROM NOW())`
+### Formatting Dates and Times
+- In MySQL, time is in year-month-day format
+- `DATE_FORMAT(NOW(), '%M %d %Y)`
+- `TIME_FORMAT(NOW(), '%H:%i %p')`
+### Calculating Dates and Times
+- `DATE_ADD(NOW(), INTERVAL 1 DAY)`
+- `DATE_SUB`
+- `DATEDIFF('2020-01-05', '2020-02-03')`
+- `TIME_TOP_SEC`: seconds elapsed since midnight
+### IFNULL and COALESCE
+- with `IFNULL` you provide value if value is null `IFNULL(col_name, '...')`
+- with `COALESCE` fn, you supply a list of values and it will return first non-null value
+### IF and CASE
+- `IF(condition, true, false)` for two options
+- `CASE` for more than two options
+- `CASE WHEN condition THEN ELSE '...' END`
+
+
+## Views
+Views simplify the query process by providing a view to the underlying data/tables
+- `CREATE OR REPLACE VIEW ... AS`
+- can update views (updateable view) if they don't have aggregate fns, distinct, group by/having, union in them
+- `WITH CHECK OPTION` prevents modififed rows from being deleted from an updated view
+- Views reduce impact of changes by providing abstraction of underlying table
+- Views restrict access to the data - security
+
+
+## Stored Procedures
+- SQL code should be outside application code
+- Use stored procedures to store and organize SQL code
+- provide data security
+- `CREATE PROCEDURE ...() BEGIN SELECT...; END$$`
+### Validating Stored Procedures
+- validating is important, but do most of the validation at the appication/input level
+- check data types, inputs
