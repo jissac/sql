@@ -175,3 +175,45 @@ Views simplify the query process by providing a view to the underlying data/tabl
 ### Validating Stored Procedures
 - validating is important, but do most of the validation at the appication/input level
 - check data types, inputs
+- user/session defined variable, prefix with `@` sign
+- `SET @variable = 0`
+- Local variable: variables in stored procedures, use `DECLARE` clause
+### User Functions
+- Similar to stored procedures except can only return a single value, not table, list, rows, etc
+
+
+## Triggers and Events
+- Trigger: a block of Sql code that automatically gets executed before or after an insert, update, or delete statement
+- `CREATE TRIGGER table_after_operation`
+- `SHOW TRIGGERS`
+- `DROP TRIGGER IF EXISTS`
+- Event: a task / block of Sql code that gets executing according to a schedule
+- `CREATE EVENT ON SCHEDULE DO BEGIN`
+
+
+## Transactions and Concurrency
+- Transaction: group of SQL statements that represent a single unit of work
+- Transactions follow ACID
+    - A: Atomicity - transactions are like atoms - unbreakable, each transaction is a single unit of work. Either all statments get executed successfuly and changes are committed or transaction is rolled back an changes undone
+    - C: consistency - db will always remain in a consistent state
+    - I: isolation - transactions are protected from each other if they try to update same data, only one transaction at a time
+    - D: durability - once a transaction is committed, the changes made by the transaction are permanent
+- `START TRANSACTION ... COMMIT;`
+- Concurrency: two or more users trying to access/modify same data at the same time
+- MySQL locks first transaction before second transaction can commit. When first transaction commits, others can commit. 
+- problems with concurrency:              
+      - lost updates             
+      - dirty reads - transaction reads data that hasn't been commited yet                               
+      - non-repeating (inconsistent) reads -  read once, then next query returns updated value from another commit that's diff from first read                     
+      - phantom reads - data appears after query is executed        
+- Transaction isolation levels:
+    - READ UNCOMMITTED - can have dirty reads
+    - READ COMMITTED - can have non-repeating reads
+    - REPEATABLE READ (default in mysql) - can have phantom reads
+    - SERIALIZABLE - solves all concurrency problems, however, it's slower. use if you want to avoid phantom reads
+- Deadlock: happens when different transactions can't complete b/c each has something another transaction needs. Try to schedule jobs at diff times, at non peak hours.
+
+
+## Data Types
+
+
