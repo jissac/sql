@@ -153,5 +153,27 @@ FROM
 	from 
 		clients c
 ) as sales_summary
-where total_sales is not null
+where total_sales is not null;
+
+-- Essential functions
+use sql_store;
+select 
+	product_id, 
+    name,
+    (select count(order_id) from order_items oi
+		where p.product_id = oi.product_id) as orders,
+	if((select orders) > 1,'Many times', 'once') as frequency
+from products p;
+
+-- CASE
+SELECT 
+	concat(first_name, ' ', last_name) as customer,
+    points,
+    CASE
+		WHEN points >= 3000 THEN 'Gold'
+        WHEN points > 2000 AND points < 3000 THEN 'Silver'
+        ELSE 'Bronze'
+	END as category
+from customers
+order by points DESC
 
