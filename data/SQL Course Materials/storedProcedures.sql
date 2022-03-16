@@ -79,6 +79,7 @@ END $$
 DELIMITER ;
 
 -- Validating procedures
+DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `make_payment`(
 	invoice_id INT,
     payment_amount DECIMAL(9,2),
@@ -95,4 +96,20 @@ BEGIN
 		i.payment_total = payment_amount,
         i.payment_date = payment_date
 	WHERE i.invoice_id = invoice_id;
-END
+END $$
+DELIMITER ;
+
+
+-- FUNCTIONS
+CREATE FUNCTION get_risk_factor_for_client
+(
+	client_id INT
+)
+RETURNS INTEGER
+-- DETERMINISTIC
+READ SQL DATA
+-- MODIFIES SQL DATA
+BEGIN
+	DECLARE risk_factor DECIMAL(9,2) DEFAULT 0;
+    
+
