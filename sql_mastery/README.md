@@ -215,5 +215,12 @@ Views simplify the query process by providing a view to the underlying data/tabl
 
 
 ## Data Types
-
+- String
+- int
+- float
+- bool
+- enum
+- date time
+- blob
+- json
 
